@@ -1,15 +1,17 @@
 import zrender from "zrender";
 
 export default class bulletbar {
-    constructor(canvas, data = {}, width = 300, height = 100) {
+    constructor(canvas, data = {}) {
         this.canvas = canvas;
-        this.width = width;
-        this.height = height;
         this.zr = zrender.init(this.canvas, { devicePixelRatio: 1 });
+        this.width = this.zr.getWidth();
+        this.height = this.zr.getHeight();
         this.style = {
             textColor: "#000000",
-            trailColor: "#000000",
-            colorClass: ["#cccccc", "#999999", "#555555"]
+            trailColor: "#f2f2f2",
+            colorClass: ["#f00000", "#900000", "#500000"],
+            psRound: 10,
+            barRound: 15
         };
         this.data = {
             levels: [
@@ -28,34 +30,94 @@ export default class bulletbar {
         let w = this.width,
             h = this.height,
             gap = 5,
-            mainx = 5,
-            mainy = h / 2 + 5;
+            psCellLength = 80,
+            psWidth = 25,
+            psHeight = 15,
+            barHeight = 30,
+            trailHeight = 10,
+            targetWidth = 10,
+            targetHeight = 25;
         let ps = new zrender.Group();
-        ps.position = [w - this.data.levels.length * 60, gap];
+        ps.position = [w - this.data.levels.length * 80, gap];
         this.data.levels.forEach((e, i) => {
             ps.add(
                 new zrender.Text({
                     style: {
+                        textAlign: "center",
+                        fontSize: 17,
                         text: this.data.levels[i].text,
                         textFill: this.style.textColor
                     },
-                    position: [i * 60 - 7, gap + 3]
+                    position: [i * psCellLength, gap]
                 })
             );
             ps.add(
                 new zrender.Rect({
-                    fill: this.style.colorClass[i],
+                    style: {
+                        fill: this.style.colorClass[i]
+                    },
                     shape: {
-                        r: 5,
-                        x: i * 60 + 25,
+                        r: this.style.psRound,
+                        x: i * psCellLength + psWidth,
                         y: gap,
-                        width: 25,
-                        height: 15
+                        width: psWidth,
+                        height: psHeight
                     }
                 })
             );
         });
         this.zr.add(ps);
+
+        let maxValue = this.data.levels[this.data.levels.length - 1].stage;
+        this.data.levels.forEach((e, i) => {
+            this.zr.add(
+                new zrender.Rect({
+                    z: -i,
+                    style: {
+                        fill: this.style.colorClass[i]
+                    },
+                    shape: {
+                        r: this.style.barRound,
+                        x: gap,
+                        y: h / 2 + gap,
+                        width: (e.stage / maxValue) * (w - 2 * gap),
+                        height: barHeight
+                    }
+                })
+            );
+        });
+
+        this.zr.add(
+            new zrender.Rect({
+                z: 10,
+                style: {
+                    fill: this.style.trailColor
+                },
+                shape: {
+                    r: this.style.barRound,
+                    x: gap,
+                    y: h / 2 + gap + (barHeight - trailHeight) / 2,
+                    width: (this.data.sum / maxValue) * (w - 2 * gap),
+                    height: trailHeight
+                }
+            })
+        );
+
+        this.zr.add(
+            new zrender.Rect({
+                z: 10,
+                style: {
+                    fill: this.style.trailColor
+                },
+                shape: {
+                    r: 3,
+                    x: gap + (this.data.except / maxValue) * (w - 2 * gap),
+                    y: h / 2 + gap + (barHeight - targetHeight) / 2,
+                    width: targetWidth,
+                    height: targetHeight
+                }
+            })
+        );
 
         // var rect = new zrender.Rect({
         //     shape: {
