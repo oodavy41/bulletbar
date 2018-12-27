@@ -1,0 +1,68 @@
+{
+    "groupName": "图表类",
+    "tileMetas": [
+        {
+            "name": "阶段",
+            "type": "bulletlevel",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "bulletlevel",
+                "displayName": "bulletlevel",
+                "dataQuery": [20000, 40000, 50000]
+            },
+            "mandatory": true
+        },
+        {
+            "name": "阶段名称",
+            "type": "levelname",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "levelname",
+                "displayName": "levelname",
+                "dataQuery": ["阶段一", "阶段二", "阶段三"]
+            },
+            "mandatory": true
+        },
+        {
+            "name": "当前数值",
+            "type": "bulletvalue",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "bulletvalue",
+                "displayName": "bulletvalue",
+                "dataQuery": [34566]
+            },
+            "mandatory": true
+        },
+        {
+            "name": "指标数值",
+            "type": "bulletexception",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "bulletexception",
+                "displayName": "bulletexception",
+                "dataQuery": [32000]
+            },
+            "mandatory": true
+        },
+        {
+            "name": "说明文字",
+            "type": "bullettexts",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "bullettexts",
+                "displayName": "bullettexts",
+                "dataQuery": ["当前", "指标"]
+            },
+            "mandatory": true
+        }
+    ],
+    "name": "基本子弹图",
+    "typeName": "子弹图",
+    "thumbImg": "/img/wgtmpl_thumb/line1.png",
+    "description": "基本子弹图",
+    "subType": "basic",
+    "styles": "",
+    "type": "bulletChart",
+    "dataCount": "1440"
+}

@@ -1,0 +1,42 @@
+{
+    "type": "bulletChart",
+    "subType": "basic",
+    "version": "0.0.1",
+    "config": {
+        "global": {
+            "opacity": 100,
+            "colors": ["#ffd602", "#d85850", "#eb8046", "#ffb248"],
+            "backgroundColor": "rgba(0,0,0,0)"
+        },
+        "title": {
+            "show": false,
+            "fontSize": 48,
+            "color": "#FDB75B",
+            "textAlign": "left",
+            "fontStyle": ["", ""]
+        },
+        "legend": {
+            "show": true,
+            "borderRadius": 10,
+            "textStyle": {
+                "fontSize": 14,
+                "fontFamily": "PingFang SC",
+                "color": "rgba(255,255,200,0.8)"
+            }
+        },
+        "series": [
+            {
+                "type": "bulletlevel",
+                "show": true,
+                "color1": "rgba(100,255,200,0.8)",
+                "color2": "rgba(255,100,200,0.8)",
+                "color3": "rgba(255,255,100,0.8)"
+            },
+            {
+                "show": true,
+                "type": "bulletvalue",
+                "color": "rgba(16,255,120,0.8)"
+            }
+        ]
+    }
+}

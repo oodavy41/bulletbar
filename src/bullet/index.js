@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Zr from "zrender";
-import "./App.css";
 import bulletbar from "./bullet";
 
-class App extends Component {
+export default class Index extends Component {
     constructor(props) {
         super(props);
         this.canvas = null;
@@ -61,5 +60,3 @@ class App extends Component {
         );
     }
 }
-
-export default App;

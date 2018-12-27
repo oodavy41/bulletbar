@@ -119,19 +119,5 @@ export default class bulletbar {
             })
         );
 
-        // var rect = new zrender.Rect({
-        //     shape: {
-        //         r: 25,
-        //         x: 10,
-        //         y: 10,
-        //         width: 200,
-        //         height: 50
-        //     },
-        //     style: {
-        //         fill: "#FFA",
-        //         stroke: "#F00"
-        //     }
-        // });
-        // this.zr.add(rect);
     }
 }
