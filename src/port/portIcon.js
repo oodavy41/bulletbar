@@ -8,9 +8,11 @@ export default class port {
             penBG: null
         };
         this.settings = {
-            color1: 0x3eb2b9,
-            color2: 0x338c92,
-            color3: 0x26676b,
+            colors: [
+                [0x3eb2b9, 0x338c92, 0x26676b],
+                [0xc4b850, 0xa79c3a, 0x81782e],
+                [0xc04c44, 0x9b3c36, 0x752e29]
+            ],
             outrad: 60,
             inrad: 50,
             centerrad: 25,
@@ -28,16 +30,22 @@ export default class port {
             transparent: true
         });
         this.state = {
-            progress: 0
+            progress: 0,
+            speed: 1,
+            colorType: 1
         };
 
         this.App.ticker.add(delta => this.loop(delta));
         this.sprite();
     }
 
+    set(state) {
+        Object.assign(this.state, state);
+    }
+
     loop(delta) {
         this.state.progress %= 2 * Math.PI;
-        this.state.progress += 0.015 * delta;
+        this.state.progress += 0.015 * delta * this.state.speed;
         this.renderANIM(this.state.progress);
     }
 
@@ -53,17 +61,27 @@ export default class port {
             this.objs.sprite.alpha =
                 Math.abs((progress % Math.PI) - Math.PI / 2) / (Math.PI / 2);
             this.App.stage.addChild(this.objs.sprite);
+        } else {
+            this.sprite();
         }
     }
-    sprite(path = "Shape.png") {
-        PIXI.loader.add(path).load(() => {
-            this.objs.sprite = new PIXI.Sprite(
-                PIXI.loader.resources["Shape.png"].texture
-            );
+
+    sprite(path = "anchor.png") {
+        if (!PIXI.loader.resources.anchor) {
+            PIXI.loader.add("anchor", path).load(() => {
+                this.objs.sprite = new PIXI.Sprite(
+                    PIXI.loader.resources.anchor.texture
+                );
+                this.objs.sprite.scale = new PIXI.Point(0.5, 0.5);
+                this.objs.sprite.anchor.x = this.objs.sprite.anchor.y = 0.5;
+                this.objs.sprite.x = this.objs.sprite.y = this.settings.center;
+            });
+        } else if (!this.objs.sprite && PIXI.loader.resources.anchor.texture) {
+            this.objs.sprite = new PIXI.Sprite(PIXI.loader.resources.anchor.texture);
             this.objs.sprite.scale = new PIXI.Point(0.5, 0.5);
             this.objs.sprite.anchor.x = this.objs.sprite.anchor.y = 0.5;
             this.objs.sprite.x = this.objs.sprite.y = this.settings.center;
-        });
+        }
     }
 
     static() {
@@ -72,12 +90,12 @@ export default class port {
         }
         let pen = this.objs.penStatic;
         pen.clear();
-        pen.lineStyle(6, this.settings.color3, 1);
-        pen.beginFill(this.settings.color2, 1);
+        pen.lineStyle(6, this.settings.colors[this.state.colorType][2], 1);
+        pen.beginFill(this.settings.colors[this.state.colorType][1], 1);
         pen.drawCircle(this.settings.center, this.settings.center, 30);
         pen.endFill();
-        pen.lineStyle(6, this.settings.color3, 0);
-        pen.beginFill(this.settings.color3, 1);
+        pen.lineStyle(6, this.settings.colors[this.state.colorType][2], 0);
+        pen.beginFill(this.settings.colors[this.state.colorType][2], 1);
         for (let rad = 0; rad < Math.PI * 2; rad += Math.PI / 20) {
             pen.drawCircle(
                 this.settings.center + this.settings.bgrad * Math.cos(rad),
@@ -96,7 +114,7 @@ export default class port {
         let pen = this.objs.penBG;
         pen.clear();
         pen.lineStyle(0, 0, 0);
-        pen.beginFill(this.settings.color1);
+        pen.beginFill(this.settings.colors[this.state.colorType][0]);
         let muit = 1;
         if (progress > Math.PI) {
             muit +=
@@ -125,7 +143,7 @@ export default class port {
         let pen = this.objs.penTwoTurn;
         pen.rotation = -progress * this.settings.rot;
         pen.clear();
-        pen.lineStyle(10, this.settings.color3, 1);
+        pen.lineStyle(10, this.settings.colors[this.state.colorType][2], 1);
         pen.beginFill(0, 0);
         let path = this.generatePath((progress % Math.PI) / Math.PI, true);
         pen.drawPolygon(path);

@@ -1,0 +1,24 @@
+{
+    "groupName": "图表类",
+    "tileMetas": [
+        {
+            "name": "播放速度",
+            "type": "speed",
+            "multiple": "1",
+            "defaultValue": {
+                "tileType": "speed",
+                "displayName": "speed",
+                "dataQuery": [1]
+            },
+            "mandatory": true
+        }
+    ],
+    "name": "港口动画",
+    "typeName": "港口动画",
+    "thumbImg": "/img/wgtmpl_thumb/line1.png",
+    "description": "港口动画",
+    "subType": "basic",
+    "styles": "",
+    "type": "portIcon",
+    "dataCount": "1440"
+}

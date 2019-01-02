@@ -7,8 +7,8 @@ export default class Index extends Component {
         super(props);
         this.canvas = null;
         this.state = {
-            width: 100,
-            height: 100
+            width: 120,
+            height: 120
         };
     }
 

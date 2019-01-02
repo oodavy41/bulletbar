@@ -6,7 +6,27 @@ import Port from "./port";
 
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<Port />, document.getElementById("root"));
+ReactDOM.render(
+    <div>
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+        <Port />
+    </div>,
+    document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
